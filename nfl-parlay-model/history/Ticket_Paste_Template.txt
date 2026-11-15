@@ -1,0 +1,11 @@
+TODAY'S DATE: [date]
+TICKET (captured [date and time]):
+Leg 1: [team or player, market, more/less or over/under, exact number]
+Leg 2: ...
+Leg 3: ...
+Payout multiplier: [x]
+
+(Board-ready format, used from session 2 on:)
+Multiplier: [x]
+Lines captured: [date, time]
+Leg 1: [pick] | Claude XX to XX | Gemini XX to XX | H/M/L | group-or-none

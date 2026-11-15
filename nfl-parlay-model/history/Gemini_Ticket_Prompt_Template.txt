@@ -1,0 +1,39 @@
+Use my master prompt v0.8. Analyze this PrizePicks 6-pick power play for NFL Week [N] ([season]). Today is [DATE]. Payout multiplier: [X]x. Stake $[S].
+
+Legs (PrizePicks lines, may differ slightly from the market):
+1. [leg]
+2. [leg]
+3. [leg]
+4. [leg]
+5. [leg]
+6. [leg]
+
+For each leg, give me your OWN independent estimate. Do not average with anyone else's numbers:
+- Market starting probability (vig removed), your probability range (low % to high %), the model-vs-market gap, letter grade A+ to F, data confidence H/M/L
+- Current market line and price from 2+ books, and whether my PrizePicks number is better or worse
+- Weather for open-air games (rain %, wind mph) and the latest injury report, especially both starting QBs
+- Pace (seconds per play) and explosive play rate for both teams, with the provider and definition
+- Team context for both teams from a recent beat-writer article (stakes, buyer/seller, stability, spot), tagged MUST-WIN / FADE CANDIDATE / NEUTRAL / UNCLEAR
+- The strongest reason it hits, then the BRUTALITY FILTER: attack every positive (SURVIVES / WEAKENED / DISMANTLED), add two new negatives, and give the best case for the other side
+- What kills this leg
+- Correlation group if any legs are linked (letter, or none), with a joint probability for each linked group
+
+Then:
+- Break-even probability (1 / multiplier) and per-leg break-even
+- Combined probability (low/mid/high, correlation-adjusted) and expected return per $1
+- OPTIMISM WARNING if your legs average more than 2 points above market
+- Verdict: PLAY / MODIFY / PASS
+- The single weakest leg and your best replacement from a different game
+
+End with this block EXACTLY in this format so I can paste it into my board (numbers only, no % signs inside the ranges):
+
+Multiplier: [X]
+Leg 1: [pick] | Gemini XX to XX | H/M/L | group-or-none
+Leg 2: [pick] | Gemini XX to XX | H/M/L | group-or-none
+Leg 3: [pick] | Gemini XX to XX | H/M/L | group-or-none
+Leg 4: [pick] | Gemini XX to XX | H/M/L | group-or-none
+Leg 5: [pick] | Gemini XX to XX | H/M/L | group-or-none
+Leg 6: [pick] | Gemini XX to XX | H/M/L | group-or-none
+Correlation: Group [letter] legs [n,n] product XX, joint XX (if any)
+
+Cite your sources at the end.

@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+# Local privacy rules: lists the personal details to strip, so it must never be uploaded.
+tools/redactions.local.json
