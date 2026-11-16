@@ -124,6 +124,8 @@ def call_model(model, system, prompt, key, max_tokens, timeout=240):
     if isinstance(text, list):
         text = "".join(p.get("text", "") for p in text if isinstance(p, dict))
     if not text.strip():
+        if choice.get("finish_reason") == "length":
+            raise RuntimeError("ran out of tokens while thinking, before answering — re-run with a bigger --max-tokens")
         raise RuntimeError(f"empty reply (finish_reason={choice.get('finish_reason')})")
     usage = data.get("usage") or {}
     return text.strip(), usage.get("cost")
