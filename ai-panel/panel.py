@@ -66,10 +66,14 @@ def load_key():
         return key
     f = Path.home() / ".openrouter.env"
     if f.is_file():
-        for line in f.read_text(encoding="utf-8-sig").splitlines():  # -sig: Notepad/PowerShell may add a BOM
+        lines = f.read_text(encoding="utf-8-sig").splitlines()  # -sig: Notepad/PowerShell may add a BOM
+        for line in lines:
             k, _, v = line.partition("=")
             if k.strip() == "OPENROUTER_API_KEY" and v.strip():
                 return v.strip().strip('"').strip("'")
+        for line in lines:  # also accept the bare key on its own line
+            if line.strip().strip('"').strip("'").startswith("sk-or-"):
+                return line.strip().strip('"').strip("'")
     return ""
 
 
