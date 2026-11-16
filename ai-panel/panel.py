@@ -196,7 +196,8 @@ def main():
     ap.add_argument("--project", help="the '<SPORT> Model' folder (default: searched from the current folder)")
     ap.add_argument("--models", help="comma-separated OpenRouter model IDs")
     ap.add_argument("--online", action="store_true", help="append :online so models can search the web (extra cost)")
-    ap.add_argument("--max-tokens", type=int, default=6000)
+    ap.add_argument("--max-tokens", type=int, default=12000,
+                    help="per-model output budget; 'thinking' models spend part of it reasoning before they answer")
     ap.add_argument("--out", help="report path (default: <project>/04_Research/AI_Panel/<timestamp>.md)")
     ap.add_argument("--no-votes", action="store_true", help="don't ask models for a VOTES block")
     ap.add_argument("--mock", action="store_true", help="fake answers, no key or cost")
