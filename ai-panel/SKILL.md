@@ -28,9 +28,10 @@ not a confirming vote.
    python ~/.claude/skills/ai-panel/panel.py --sport nfl --prompt-file "<request file>"
    ```
    Options: `--models a,b,c` (OpenRouter IDs), `--online` (models may search the web; extra cost),
-   `--master <file>`, `--project <folder>`, `--mock` (no key, no cost), `--list-models gemini` (browse IDs).
-   Default panel: Gemini 4 Carbon, GPT-6.1 Sol, Grok 4.7, DeepSeek v4.1 Flash, Mistral Large 4 —
-   five labs other than Anthropic, since Claude is already in the room. Runs in parallel; ~1–3 min.
+   `--master <file>`, `--project <folder>`, `--mock` (no key, no cost), `--list-models qwen` (browse IDs).
+   Default panel: GPT-6.1 Sol, Grok 4.7, DeepSeek v4.1 Flash, Mistral Large 4, Qwen 4 Max —
+   five labs, deliberately **no Claude or Gemini** (Claude is already the analyst here and Gemini is
+   consulted separately). Keep it that way when swapping models unless the user asks otherwise. Runs in parallel; ~1–3 min.
 
 3. **Read the full report** the script saves (`<SPORT> Model/04_Research/AI_Panel/<timestamp>_<sport>.md`),
    not just the tally. It has every model's full answer.

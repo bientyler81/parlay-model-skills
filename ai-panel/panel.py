@@ -6,10 +6,10 @@ Standard library only. Usage (run from anywhere):
 
   python panel.py --sport nfl --prompt-file ticket.md
   python panel.py --sport cfb --prompt "L1: Georgia -3.5 ..."      # or pipe the prompt on stdin
-  python panel.py --sport nfl --prompt-file t.md --models google/gemini-4-carbon,openai/gpt-6.1-sol
+  python panel.py --sport nfl --prompt-file t.md --models openai/gpt-6.1-sol,qwen/qwen4-max
   python panel.py --sport nfl --prompt-file t.md --online           # let models search the web (extra cost)
   python panel.py --sport nfl --prompt-file t.md --mock             # test without a key or spending money
-  python panel.py --list-models gemini                              # browse OpenRouter model IDs
+  python panel.py --list-models qwen                                # browse OpenRouter model IDs
 
 API key (never stored in this folder, which is published):
   1. environment variable OPENROUTER_API_KEY, or
@@ -33,13 +33,14 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
 
-# Claude is already the main analyst in Claude Code, so the default panel is five OTHER labs.
+# Five labs other than Anthropic and Google: Claude is already the main analyst here and Gemini is
+# already consulted separately, so the panel adds genuinely different voices.
 DEFAULT_MODELS = [
-    "google/gemini-4-carbon",
     "openai/gpt-6.1-sol",
     "x-ai/grok-4.7",
     "deepseek/deepseek-v4.1-flash-1017",
     "mistralai/mistral-large-4-0",
+    "qwen/qwen4-max",
 ]
 API = "https://openrouter.ai/api/v1"
 
