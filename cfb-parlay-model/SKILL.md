@@ -3,9 +3,9 @@ name: "cfb-parlay-model"
 description: "Use for any college football (CFB / NCAA) betting work: grading PrizePicks or sportsbook parlay legs and tickets, spreads, moneylines, totals, player props, spitballing Saturday slates, key numbers, injuries/availability reports, weather, pace, break-even math, Gemini comparisons, and the Monday Power 4 post-mortem audit (Section 13)."
 ---
 
-# College Football Parlay Evaluation Master Prompt — v1.3
+# College Football Parlay Evaluation Master Prompt — v1.4
 
-> Built in Gemini, derived from the user's NFL model (`../NFL Model`). v1.2 adopted Nov 10 2026 from the Week 10 Monday Audit (edits 1-4); v1.3 adopted Nov 10 2026 from Claude's verified Week 10 audit (edits 1-3: Sections 8, 13B, 13D). Sections 0-13 are Gemini's v1.2 text plus those three v1.3 additions; only this header and the WORKFLOW CONTEXT block were added for Claude. To change the method, add `01_Master_Prompt/Master_Prompt_v<version>_SKILL.md` and update this file to match.
+> Built in Gemini, derived from the user's NFL model (`../NFL Model`). v1.2 adopted Nov 10 2026 from the Week 10 Monday Audit (edits 1-4); v1.3 adopted Nov 10 2026 from Claude's verified Week 10 audit (edits 1-3: Sections 8, 13B, 13D); v1.4 adopted Nov 17 2026 from the Week 11 audit (edits 1-4: Sections 5, 7, 9, 11). Sections 0-13 are Gemini's v1.2 text plus the v1.3 and v1.4 additions; only this header and the WORKFLOW CONTEXT block were added for Claude. To change the method, add `01_Master_Prompt/Master_Prompt_v<version>_SKILL.md` and update this file to match.
 
 ## WORKFLOW CONTEXT (Claude)
 - The user builds CFB parlays on **PrizePicks**. Two payout modes seen so far: flat pick'em multipliers (e.g. 6-pick 22.22x shown on a slip with dogs/hooks) and **Team Picks / Game Winner** mode, where each pick carries its own market-weighted multiplier. Six heavy favorites in Team Picks paid only ~5x (Week 10). Always use the multiplier the app shows (the user's report or screenshot); if unknown, say so and do not assume 22.22x.
@@ -69,6 +69,7 @@ Print this block at the top of the reply, one line per item, marked ✅ done / �
 ## 5. PROBABILITY METHOD (market-first)
 - Start each leg from the market's vig-removed probability (consensus of 2+ books).
 - Adjust ONLY for concrete reasons you can name: ticket line better/worse than market (crossing CFB key numbers like 3, 7, 10, 14), confirmed post-line QB/starter injury news, extreme weather (wind 15+ mph), or significant motivation/rest asymmetry.
+- TRAVEL IS NOT A NAMED REASON: Travel disruption by itself (late arrival, same-day flight, bus trip, changed kickoff) is not a reason to move probabilities off the market; the market prices it within hours. Adjust only for confirmed consequences (e.g., a player ruled out).
 - Cap total adjustment at +/-4 percentage points unless confirmed news (e.g., starting QB ruled out) broke after the market settled.
 - If the ticket line equals the market, there is NO line edge; state so explicitly.
 - State the market starting point directly next to your range.
@@ -111,7 +112,7 @@ Efficiency: EPA/play (PPA), success rate (overall, standard downs, passing downs
 Trenches & Havoc: Sack rate, tackle for loss (TFL) rate, Havoc rate (plays ending in TFL, turnover, or pass deflection), pressure rate.
 Explosives & Big Plays: Explosive play rate (rushes 10+ yards, passes 20+ yards) and explosive play rate allowed.
 PACE (required): Seconds per play, plays per game, and run/pass split. Highlight service academy option teams (~30+ sec/play) vs. hurry-up spread offenses (<20 sec/play).
-Turnovers & Luck: Turnover margin, fumble recovery luck, red-zone scoring % vs. TD conversion %, and 4th-down conversion rate (attempts/makes). Flag any team that lost by 10+ despite winning total yards/YPP due to >= 3 failed 4th-down attempts as a prime `REGRESSION UP` candidate for the following week.
+Turnovers & Luck: Turnover margin, fumble recovery luck, red-zone scoring % vs. TD conversion %, and 4th-down conversion rate (attempts/makes). Flag any team that lost by 10+ despite winning total yards/YPP due to >= 3 failed 4th-down attempts as a prime `REGRESSION UP` candidate for the following week, but only if EPA/play or post-game win expectancy (Deserved Win %) also favors that team (Section 13D). Yardage alone never earns the tag.
 Situational: Rest/travel (cross-country conference realignment travel, e.g. Big Ten/ACC coasts), bye weeks, weeknight short weeks (MACtion, Sun Belt Tuesday/Wednesday games), sandwich/lookahead spots.
 Pythagorean Expectation: $PF^{2.37} / (PF^{2.37} + PA^{2.37})$ vs. actual win %. If actual win % deviates by $\ge 0.18$, flag REGRESSION DOWN or REGRESSION UP.
 
@@ -125,6 +126,7 @@ Pythagorean Expectation: $PF^{2.37} / (PF^{2.37} + PA^{2.37})$ vs. actual win %.
 ## 9. AVAILABILITY, INJURIES, AND ROSTER VOLATILITY
 In CFB, injury disclosures are not standardized outside of the SEC and Big Ten:
 - For SEC & Big Ten games: State exact status from the official conference availability report (Out, Doubtful, Questionable, Game-Time Decision).
+- QB STATUS IS UNCERTAIN UNTIL KICKOFF: A starting QB listed Probable, Questionable or Game-Time Decision, or a QB whose coach has not named a starter, is UNCERTAIN until confirmed by the game-day report or warmups. Any leg that depends on that QB carries Low confidence and must be re-checked at the final report; if the ticket locks before then, say so in the lock-timing item.
 - For ACC, Big 12, G5, and Independents: Cite verified beat reporters, local team press briefings, or pregame sideline warm-up sightings. Mark unconfirmed rumors as SPECULATION.
 - Flag transfer portal entries, season-ending opt-outs, and redshirt preservations (players sitting out after reaching their 4-game regular-season limit).
 
@@ -157,6 +159,7 @@ Its sole purpose is to destroy the thesis for the pick before grading:
 - Combined probability (low/mid/high) adjusted for correlation vs. break-even ($1/\text{multiplier}$).
 - Expected value (EV) per $1 staked.
 - Format alignment: Confirm payout structure (flat DFS pick'em vs. dynamic pick'em vs. open sportsbook odds) per Section 5's FORMAT & ALT-SPREAD ISOLATION rule before proposing leg swaps to hit a target multiplier.
+- PRIZEPICKS TEAM PICKS PRICING CHECK: Before the parlay verdict, record the app's multiplier for each pick and the ticket total (user's report or screenshot). Compute each pick's app / fair (fair = 1 / vig-free market probability) and the ticket's app / fair. Because the margin applies per pick, prefer 2-3 picks. A ticket paying under 90% of fair is a PASS unless the model's combined edge (product of model p / product of market p) is at least fair / app. Flag any single pick paying 100%+ of fair as a value pick.
 - Cynical assessment: Analytical edge or square narrative? What critical information is missing? Best reason to pass?
 - Weeknight vs. Saturday separation: Recommend isolating Tuesday–Thursday games (MACtion, Sun Belt, Thursday night P4) from Saturday cards to prevent locking bankroll before Friday/Saturday morning availability updates.
 
