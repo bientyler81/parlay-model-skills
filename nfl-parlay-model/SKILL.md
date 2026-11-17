@@ -3,7 +3,7 @@ name: "nfl-parlay-model"
 description: "Use for any NFL betting work: grading PrizePicks parlay legs or tickets (power or flex), player props, spitballing games/lines, odds, injuries, weather, pace, team context, break-even math, Gemini comparisons, or updating the parlay board/ticket log."
 ---
 
-# NFL Parlay Evaluation Master Prompt — v0.14
+# NFL Parlay Evaluation Master Prompt — v0.15
 
 ## 0. ENFORCEMENT (read first, every time)
 - Apply this whole skill to EVERY leg, ticket, or game idea, including casual spitballing. No lighter version.
@@ -201,6 +201,7 @@ PER-LEG DEEP DIVE LAYOUT (new in v0.12, the user's preferred format, modeled on 
 - **What Kills This Leg:** one line
 - **What Would Change My Mind:** one line
 - **Correlation Group:** none, or the group letter and the linked legs
+- **Thought Process:** (new in v0.15, the user's request) a short plain-English walkthrough of how the numbers were reached, in this order: (1) what the market says and why it sits there (line, price, any moves and what caused them); (2) what the matchup data and news add (QBs, injuries, efficiency, pace, weather, context) and whether any of it is new since the line was set; (3) what PrizePicks offers versus the market and what that does to the price; (4) why the probability moved off MPP or stayed on it; (5) how the hit chance and the payout pull against each other, ending in the verdict. Four to eight sentences, no new numbers that aren't shown elsewhere, and say plainly when the honest answer is "the market already has this priced."
 - **Verdict:** Keep / Replace / Drop
 Confidence is the 5C data-quality rating (H/M/L), not a measure of how likely the leg is: a 54% leg can be H confidence and still be close to a coin flip, so say that next to it.
 
@@ -248,8 +249,8 @@ Within 2 hours before the earliest kickoff on the ticket (ET), and again after i
 1. PRE-ANALYSIS CHECKLIST block (section 4)
 2. OPTIMISM WARNING if triggered (section 5A), then a short verdict: PLAY / MODIFY / PASS with one-sentence reason
 3. Table of legs: Leg | Vig-free % | MPP % | My range | Model vs MPP | Break-even | Edge | Grade | Game Grade | Confidence | Keep/Replace/Drop
-4. Team context lines for each team (section 9A) and pace/explosive lines for each game (section 7)
-5. Per-Leg Deep Dive Analysis: one section per leg in the PER-LEG DEEP DIVE LAYOUT (section 10), including the BRUTALITY FILTER table and WHAT WOULD CHANGE MY MIND (sections 10, 10A)
+4. Team context lines for each team (section 9A) and pace/explosive lines for each game (section 7). Whenever a game is discussed (info pulls, slate scans, spitballing), add a "How I'm thinking about this game" paragraph: what the market expects, what the matchup and news say, where the model agrees or disagrees with the market and why, and which picks on that game (if any) are worth a look and which aren't (new in v0.15).
+5. Per-Leg Deep Dive Analysis: one section per leg in the PER-LEG DEEP DIVE LAYOUT (section 10), including the BRUTALITY FILTER table, WHAT WOULD CHANGE MY MIND and the THOUGHT PROCESS (sections 10, 10A)
 6. Parlay-level math with the correlation adjustment shown, power and (if relevant) flex EV (sections 11, 11A)
 7. LOCK RECHECK plan: when it runs (ET) and what it checks (section 11C)
 8. BOARD ENTRY block in the board's import format, whole numbers only, no % signs. Give each leg its vig-free market price ("Market") and MPP; omit MPP when it equals Market:
@@ -301,4 +302,5 @@ v0.11 Week 9 review fixes (adopted by the user Nov 10): PrizePicks number and mu
 v0.12 Per-Leg Deep Dive layout (adopted Nov 14 at the user's request): every leg shown as its own numbered section with bold-labeled bullets (range/grade/confidence, market line & price, PrizePicks number vs market, break-even & edge, hits, fails, brutality filter, what kills it, what would change my mind, correlation group, verdict), modeled on Gemini's per-leg format (10, 12). Method unchanged.
 v0.13 Game grade (adopted Nov 14 at the user's request): a second letter grade from the probability alone (A+ 80%+ down to F under 40), shown next to the value grade in the deep dive, the leg table and the log; the value grade still decides Keep/Drop and PLAY/PASS (5C, 10, 12, 14). Method unchanged.
 v0.14 Week 10 review fixes (adopted by the user Nov 17; process only): multiplier sanity check in checklist item 1 (a typed DET ML 1.36x was really 1.63x); lock recheck must include the line re-pull (11C; HOU -4.5 and CAR/NO moved before kickoff); 5A recheck result recorded, cap unchanged, next recheck at 120 unique bets. No probability changes.
+v0.15 Thought process (adopted Nov 17 at the user's request; format only): every graded leg gets a plain-English Thought Process bullet (market, matchup/news, PrizePicks vs market, why the number moved or didn't, hit vs payout, verdict), and every game discussed gets a "How I'm thinking about this game" paragraph (10, 12). Method unchanged.
 v0.10 Consistency fixes and additions (Nov 2): market price at the PrizePicks number (MPP) as the starting point, with vig-removal formula and alternate-line rule (5); gap line split into Model vs MPP and Line value so real line edges don't trigger the optimism warning (5A); post-line wind change counts as news (5A, 6); key-number table rewritten around crossing vs landing on a number, push counted as half a win until verified (5B); grade scale from edge vs break-even and H/M/L confidence definitions (5C); weather moves probability, not grades, and heavy storms defined (6); player props (7A); inactives timing (9); WHAT WOULD CHANGE MY MIND line (10); brutality filter removes credit before re-grading (10A); power and flex math with formulas (11); game-script correlations (11A); staking rules (11B); lock recheck (11C); CLV defined in MPP points and post-week cause tags (14); calibration snapshot points to the live accuracy panel; all times ET; ranges no wider than 6 points; estimates allowed only with inputs shown
