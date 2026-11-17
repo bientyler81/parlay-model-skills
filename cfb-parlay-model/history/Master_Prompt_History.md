@@ -7,8 +7,9 @@
 | v1.2 | Nov 10 2026 | Gemini, from Week 10 audit | 1) HARD VERIFICATION GATE (no grades without live odds + QBs). 2) ANEMIC-OFFENSE ANCHOR CAP in 10A (bottom-35 offense can't grade above B- as a heavy fav). 3) FORMAT & ALT-SPREAD ISOLATION in Sections 5 and 11 (confirm flat vs dynamic payout; no ML-to-spread swaps without their own brutality filter). 4) 4th-down conversion tracking and REGRESSION UP flag in Sections 7 and 13D. |
 
 | v1.3 | Nov 10 2026 | Claude, from verified Week 10 audit (approved by the user) | 1) Section 13D: a REGRESSION UP/DOWN tag needs EPA/play or Deserved Win % to agree with the yardage gap. 2) Section 8: WEEKLY PATTERN COUNTS, print the full count with its denominator. 3) Section 13B: closing lines cite 2 named sources per game; Gemini audit tables are UNVERIFIED until re-opened. |
+| v1.4 | Nov 17 2026 | Claude, from the Week 11 audit (approved by the user) | 1) Section 9: a QB listed Probable/Questionable/GTD or unnamed is UNCERTAIN until kickoff; dependent legs Low confidence, re-check at the final report. 2) Section 5: travel disruption alone is not a named adjustment reason. 3) Section 11: PrizePicks Team Picks pricing check (app / fair per pick and ticket; under 90% of fair = PASS unless edge covers it; prefer 2-3 picks). 4) Section 7: the 4th-down REGRESSION UP flag needs EPA or Deserved Win % to agree. |
 
-Files (current): `Master_Prompt_v1.3_SKILL.md` and `Master_Prompt_v1.3_for_Gemini.txt`. Earlier: `Master_Prompt_v1.2_SKILL.md` (Claude skill copy, same text as `.claude/skills/cfb-parlay-model/SKILL.md`) and `Master_Prompt_v1.2_for_Gemini.txt` (exactly as Gemini printed it).
+Files (current): `Master_Prompt_v1.4_SKILL.md` and `Master_Prompt_v1.4_for_Gemini.txt` (built by `build_v14.py`). Earlier: `Master_Prompt_v1.3_SKILL.md`, `Master_Prompt_v1.2_SKILL.md` (Claude skill copy, same text as `.claude/skills/cfb-parlay-model/SKILL.md`) and `Master_Prompt_v1.2_for_Gemini.txt` (exactly as Gemini printed it).
 
 ## Ideas from the NFL model not yet in the CFB model (proposals only; the user approves)
 - MPP: start from the market price at the PrizePicks number, not the book's own number.
