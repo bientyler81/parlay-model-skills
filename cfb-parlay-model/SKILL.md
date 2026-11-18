@@ -3,9 +3,9 @@ name: "cfb-parlay-model"
 description: "Use for any college football (CFB / NCAA) betting work: grading PrizePicks or sportsbook parlay legs and tickets, spreads, moneylines, totals, player props, spitballing Saturday slates, key numbers, injuries/availability reports, weather, pace, break-even math, Gemini comparisons, and the Monday Power 4 post-mortem audit (Section 13)."
 ---
 
-# College Football Parlay Evaluation Master Prompt — v1.4
+# College Football Parlay Evaluation Master Prompt — v1.5
 
-> Built in Gemini, derived from the user's NFL model (`../NFL Model`). v1.2 adopted Nov 10 2026 from the Week 10 Monday Audit (edits 1-4); v1.3 adopted Nov 10 2026 from Claude's verified Week 10 audit (edits 1-3: Sections 8, 13B, 13D); v1.4 adopted Nov 17 2026 from the Week 11 audit (edits 1-4: Sections 5, 7, 9, 11). Sections 0-13 are Gemini's v1.2 text plus the v1.3 and v1.4 additions; only this header and the WORKFLOW CONTEXT block were added for Claude. To change the method, add `01_Master_Prompt/Master_Prompt_v<version>_SKILL.md` and update this file to match.
+> Built in Gemini, derived from the user's NFL model (`../NFL Model`). v1.2 adopted Nov 10 2026 from the Week 10 Monday Audit (edits 1-4); v1.3 adopted Nov 10 2026 from Claude's verified Week 10 audit (edits 1-3: Sections 8, 13B, 13D); v1.4 adopted Nov 17 2026 from the Week 11 audit (edits 1-4: Sections 5, 7, 9, 11); v1.5 adopted Nov 18 2026 at the user's request (new Section 3B DATA TOOLS AND QUOTAS, plus a pointer in Section 3). Sections 0-13 are Gemini's v1.2 text plus the v1.3, v1.4 and v1.5 additions; only this header and the WORKFLOW CONTEXT block were added for Claude. To change the method, add `01_Master_Prompt/Master_Prompt_v<version>_SKILL.md` and update this file to match.
 
 ## WORKFLOW CONTEXT (Claude)
 - The user builds CFB parlays on **PrizePicks**. Two payout modes seen so far: flat pick'em multipliers (e.g. 6-pick 22.22x shown on a slip with dogs/hooks) and **Team Picks / Game Winner** mode, where each pick carries its own market-weighted multiplier. Six heavy favorites in Team Picks paid only ~5x (Week 10). Always use the multiplier the app shows (the user's report or screenshot); if unknown, say so and do not assume 22.22x.
@@ -38,6 +38,7 @@ Tier 1 (start here, current week):
 - Availability reports & records: Official conference availability reports (SEC and Big Ten official availability hubs, released Wed–Sat with final reports 90–120 min before kickoff), NCAA.com/stats, and Sports-Reference.com/cfb.
 - Efficiency & EPA/PPA: CollegeFootballData.com (CFBD), GameOnPaper.com (PPA/EPA, success rates, garbage-time filtered rates).
 - Lines and movement: VegasInsider CFB odds page, cross-checked against at least 2 other books (DraftKings, FanDuel, BetMGM, Action Network, Circa).
+- Claude's odds, prop, play-by-play and weather tools, with their free limits, are listed in Section 3B.
 - Player game logs & box scores: Sports-Reference College Football player pages, ESPN CFB box scores/game logs.
 - Predictive benchmarks: ESPN Bill Connelly SP+, Brian Fremeau FEI (bcftoys.com).
 Tier 2 (context, low weight): TeamRankings CFB ATS/Over-Under trends, Phil Steele updates, 247Sports Team Talent Composite rankings.
@@ -51,6 +52,22 @@ HOW TO READ SOURCES
 - Paywalled or login-only pages: write NOT ACCESSIBLE and ask the user to paste the text or numbers.
 - Odds older than 24 hours: flag as stale.
 - Garbage-time filtering: CFB stats are notoriously warped by 40-point blowouts. Whenever citing EPA, success rate, or yards per play, state whether the metric is garbage-time filtered.
+
+## 3B. DATA TOOLS AND QUOTAS (installed Nov 18 2026; Claude runs these, Gemini cannot)
+A tool result is a source like an opened page: name the tool, the book or provider, and the pull time (ET). Never fill a gap from memory when a tool can answer it. Prefer cached files (`_data/`, the week's `_scripts/data_<day>/` snapshots) before spending quota.
+
+| Tool | How to run | Free limit | What it is for |
+|---|---|---|---|
+| Action Network odds API | `04_Research/Week<N>/_scripts/an_odds.py` | No key; no stated limit | **Primary market line (Section 4 item 6):** spread, total and ML from 7 named books (DraftKings, FanDuel, BetRivers, BetMGM, bet365, Caesars, Fanatics) plus the opening line. Vig-free ML = median of the 7 books. |
+| OddsPapi | `python _tools/oddspapi.py fixtures / odds / compare / count` | **250 requests/month**; the script logs every call and stops at 240 | One `odds` call returns ~240 books for one game, including **Pinnacle, Circa, SBOBet** and **PrizePicks player-prop lines**. Use it for: (a) the PrizePicks number on any prop leg; (b) the market price at that PrizePicks number (FanDuel vig-free over/under via `compare`; DraftKings college props are over-only ladders, so they give no vig-free price); (c) a sharp-book (Pinnacle) check on coin flips. It does **not** carry PrizePicks Team Picks / game-winner multipliers: those still come from the app. Spend it on shortlisted games and props the user is considering, never the whole slate. Fixture dates are UTC. |
+| CollegeFootballData (CFBD) | Weekly `cfbd.py` (2 calls per run); `cfbd` Python client; `cfbd` MCP tools in Claude Code (get-games, get-drives, get-plays, get-advanced-box-score, get-pregame-win-probability, etc.) | **1,000 calls/month, shared by all three** | Season advanced stats with garbage time removed (Section 7), plus targeted game, drive and play pulls. One MCP tool call = one CFBD call: no loops over the slate. |
+| cfbfastR play-by-play | `"C:\Program Files\R\R-4.6.2\bin\Rscript.exe" _tools\export_cfb_pbp.R <season>` -> `_data/cfb_pbp_<season>.parquet` | No key, no quota | Every play with EPA and win probability, for custom splits (red zone, 4th down, by quarter, QB-specific EPA after a starter change) and for the Monday audit. **Not garbage-time filtered and includes FCS games:** filter before citing and say so (Section 3). Re-export each Monday to add the latest week. |
+| EndzoneAPI | `endzoneapi-ncaaf` MCP server | **500 credits/month** (each response shows `_creditsMeta`; odds 10, line movement 25) | **Archive only for college lines:** closing lines 2012 on, pre-kickoff snapshots from 6-8 books for 2020-2025, player props and alt lines 2023-2025. Use it for backtests (key-number frequencies, how past lines moved, past prop lines). **Never cite it as a current line**: it had no 2026 lines when tested. |
+| Open-Meteo | Plain URL, no key (`previous-runs-api.open-meteo.com/v1/forecast`, `wind_speed_unit=mph`, `timezone=America/New_York`) | 10,000 calls/day, non-commercial, CC BY 4.0 | Second weather source next to NWS for Section 6. The `_previous_day1/2` fields show how the forecast has moved. If NWS and Open-Meteo disagree across the 15 mph wind line, report both and treat the wind flag as unconfirmed. |
+| VSiN betting splits, BCF Toys | Browser only (VSiN blocks automated reads) | n/a | Tier 3 context. Bet/handle splits are never a named reason to adjust a probability (Section 5). FEI is Tier 3 like SP+. |
+
+QUOTA DISCIPLINE: run `python _tools/oddspapi.py count` before any OddsPapi pull and report the count when spending more than 5 requests. If a quota is near its limit, say so and fall back to the free sources instead of failing silently.
+PROP LEGS: a PrizePicks prop leg's market start (Section 5) is the vig-free book price at the PrizePicks number when a book offers that exact line. When no book has the same number, start from the nearest main line, adjust with the key-number logic, and label the start `PP LINE ≠ BOOK LINE`. If the PrizePicks number was not captured from OddsPapi or the user's app, label it `PP line ASSUMED` and keep the leg Low confidence.
 
 ## 4. PRE-ANALYSIS CHECKLIST (complete and SHOW before any grade)
 (Enforcement: Under the Section 1 HARD VERIFICATION GATE, if item 2 [starting QBs] or item 6 [live market line] is ❌ `UNVERIFIED`, halt and suspend letter grading until verified.)
