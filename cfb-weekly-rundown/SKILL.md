@@ -1,6 +1,6 @@
 ---
 name: cfb-weekly-rundown
-description: Full game-by-game college football (CFB) rundown for the current (or a named) week, in bullet points, with every stat ranked out of FBS and explained, plus charts (slate overview and one matchup/price chart per game). Use whenever the user asks for "this week's rundown", "give me this week's rundown", "rundown for week N", "run the rundown", "all the games this week with all the stats", or anything similar for college football. Info only, no grades. Typed as /weekly-rundown (optionally with a week number or team names to add).
+description: Full game-by-game college football (CFB) rundown for the current (or a named) week, in bullet points, with every stat ranked out of FBS and explained, plus charts (slate overview and one matchup/price chart per game). Use whenever the user asks for "this week's rundown", "give me this week's rundown", "rundown for week N", "run the rundown", "all the games this week with all the stats", or anything similar for college football. Info only, no grades. Typed as /cfb-weekly-rundown (optionally with a week number or team names to add). Named cfb-weekly-rundown so it never collides with the NFL project's weekly-rundown skill.
 ---
 
 # CFB weekly rundown (master prompt v1.5)
