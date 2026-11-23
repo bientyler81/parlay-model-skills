@@ -72,7 +72,11 @@ Top of the file:
 - **How to read the numbers:** ranks out of 32, the league averages from the JSON, EPA scale, Pythagorean, vig-free, "PrizePicks needs", sources, and "This is information, not picks."
 - Results of any games already played this week (from nflverse), and a rest note: byes last week, short or long rest.
 
-Then **one section per game in kickoff order**: `## N. Away Team (W-L) @ Home Team (W-L)`, then a bold line with kickoff ET, venue and city, roof and surface, divisional Y/N (plus neutral site, flexed, international). Under it, these bold sub-headers, each with several bullets:
+Next comes **"## The slate in charts"**: embed the slate PNGs with relative paths, `![Who the market favors](charts_<mondd>/00_market_favorites.png)`. Put one plain sentence under each: how to read it and the one thing it shows this week (for example "Denver's 7-2 is the biggest gap above its points").
+
+Then **one section per game in kickoff order**. Embed that game's chart right after the bold kickoff/venue line, with one sentence on how to read it ("Dots further right are better ranks. The lower panels show the price at every PrizePicks number; anything above the dashed 55.2% line clears break-even.").
+
+For each game: `## N. Away Team (W-L) @ Home Team (W-L)`, then a bold line with kickoff ET, venue and city, roof and surface, divisional Y/N (plus neutral site, flexed, international). Under it, these bold sub-headers, each with several bullets:
 1. **The betting market:** spread by book and the vig-free cover %; total and over %; favorite's moneyline %; movement since the last pull (and why, or "not confirmed"); the PrizePicks numbers each side and each total side needs.
 2. **Quarterbacks:** both starters, how they were confirmed, backups, recent QB history and notable numbers.
 3. **Injuries that matter:** out, doubtful and questionable for both teams, and why each one matters.
