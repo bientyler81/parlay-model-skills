@@ -33,6 +33,26 @@ Read the facts JSON with Python, not by eye. Notes on the fields:
 - `luck` = win % minus Pythagorean; ±0.15 or more is a flag.
 - Ranks: 1 = best. For points allowed, sacks taken, turnovers given and seconds per play, 1 is the lowest.
 
+## Step 1b. Make the charts (about 30 seconds, no API calls)
+```
+.venv\Scripts\python.exe -I -X utf8 02_Tools\weekly_rundown\make_charts.py --week N
+```
+It reads the newest facts file for that week and writes PNGs to `04_Research/Week<N>/charts_<mondd>/`, then prints the markdown image line for each one:
+
+**Slate charts:**
+- `00_market_favorites.png`: each favorite's win %, in kickoff order. A tick marks the previous pull.
+- `01_line_movement.png`: spread before and now, with key numbers 3 and 7 marked. Only made when there's a previous pull.
+- `02_efficiency_map.png`: offense EPA against defense EPA for every team playing, split into four labeled quadrants.
+- `03_luck_check.png`: Pythagorean vs actual win %, with gaps of 15+ points labeled.
+
+**One chart per game:** `gNN_<AWAY>_<HOME>.png`. It has four panels:
+- 13 stat ranks for both teams (away is blue, home is orange).
+- The away team's cover % at every spread number, with the 55.2% line and the market point.
+- The over % at every total, with both break-even lines.
+- Game-window wind with the 15 mph rule and rain %. Domes just say so.
+
+Look at a couple of the PNGs (Read the image) before using them: check for overlapping labels and empty panels. If a chart is broken, fix `make_charts.py` rather than dropping the chart.
+
 ## Step 2. Injuries (EndzoneAPI MCP)
 - `get_injuries` for the season and week, all teams. It costs 2 credits; the output is large, so parse the saved file with Python.
 - List Out / Doubtful / Questionable players with injury and practice status. Flag starters, QBs and kickers.
