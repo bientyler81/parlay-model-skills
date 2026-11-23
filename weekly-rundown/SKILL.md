@@ -1,6 +1,6 @@
 ---
 name: weekly-rundown
-description: Full game-by-game NFL rundown for the current (or a named) week, in bullet points, with every stat ranked and explained. Use whenever the user asks for "this week's rundown", "give me the rundown", "rundown for week N", "run the rundown", "all the games this week with all the stats", or anything similar. Info only, no grades. Typed as /weekly-rundown (optionally with a week number).
+description: Full game-by-game NFL rundown for the current (or a named) week, in bullet points, with every stat ranked and explained, plus charts (slate overview and one matchup/price chart per game). Use whenever the user asks for "this week's rundown", "give me the rundown", "rundown for week N", "run the rundown", "all the games this week with all the stats", or anything similar. Info only, no grades. Typed as /weekly-rundown (optionally with a week number).
 ---
 
 # Weekly rundown (method v0.16)
@@ -95,7 +95,7 @@ Writing rules:
 - End with **"Not covered yet"**: missing beat-writer context, unconfirmed causes, reports still to come, and PrizePicks numbers not yet known.
 
 ## Step 5. Deliver and keep the folder current
-1. Send the file with SendUserFile (display: render). In chat, give a short summary: the biggest line moves, QB and injury news, weather flags, luck flags, and the most valuable hooks.
+1. Send the file with SendUserFile (display: render), plus the slate chart PNGs, so they show on the user's phone too. In chat, give a short summary: the biggest line moves, QB and injury news, weather flags, luck flags, and the most valuable hooks.
 2. Add the new data files to `04_Research/Data/README_data.md` if their layout is new. Normally it isn't, so add one line per file.
 3. Update `00_PROJECT_CONTEXT.md` ("Where things stand") with one short block: the file, the key changes, and API use.
 4. Report usage: PropLine calls (the script prints the daily counter) and EndzoneAPI credits.
