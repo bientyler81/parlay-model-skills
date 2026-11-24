@@ -3,9 +3,9 @@ name: "cfb-parlay-model"
 description: "Use for any college football (CFB / NCAA) betting work: grading PrizePicks or sportsbook parlay legs and tickets, spreads, moneylines, totals, player props, spitballing Saturday slates, key numbers, injuries/availability reports, weather, pace, break-even math, Gemini comparisons, and the Monday Power 4 post-mortem audit (Section 13)."
 ---
 
-# College Football Parlay Evaluation Master Prompt — v1.5
+# College Football Parlay Evaluation Master Prompt — v1.6
 
-> Built in Gemini, derived from the user's NFL model (`../NFL Model`). v1.2 adopted Nov 10 2026 from the Week 10 Monday Audit (edits 1-4); v1.3 adopted Nov 10 2026 from Claude's verified Week 10 audit (edits 1-3: Sections 8, 13B, 13D); v1.4 adopted Nov 17 2026 from the Week 11 audit (edits 1-4: Sections 5, 7, 9, 11); v1.5 adopted Nov 18 2026 at the user's request (new Section 3B DATA TOOLS AND QUOTAS, plus a pointer in Section 3). Sections 0-13 are Gemini's v1.2 text plus the v1.3, v1.4 and v1.5 additions; only this header and the WORKFLOW CONTEXT block were added for Claude. To change the method, add `01_Master_Prompt/Master_Prompt_v<version>_SKILL.md` and update this file to match.
+> Built in Gemini, derived from the user's NFL model (`../NFL Model`). v1.2 adopted Nov 10 2026 from the Week 10 Monday Audit (edits 1-4); v1.3 adopted Nov 10 2026 from Claude's verified Week 10 audit (edits 1-3: Sections 8, 13B, 13D); v1.4 adopted Nov 17 2026 from the Week 11 audit (edits 1-4: Sections 5, 7, 9, 11); v1.5 adopted Nov 18 2026 at the user's request (new Section 3B DATA TOOLS AND QUOTAS, plus a pointer in Section 3); v1.6 adopted Nov 24 2026 from the Week 12 audit (edits 1-2: Sections 7, 10). Sections 0-13 are Gemini's v1.2 text plus the v1.3, v1.4, v1.5 and v1.6 additions; only this header and the WORKFLOW CONTEXT block were added for Claude. To change the method, add `01_Master_Prompt/Master_Prompt_v<version>_SKILL.md` and update this file to match.
 
 ## WORKFLOW CONTEXT (Claude)
 - The user builds CFB parlays on **PrizePicks**. Two payout modes seen so far: flat pick'em multipliers (e.g. 6-pick 22.22x shown on a slip with dogs/hooks) and **Team Picks / Game Winner** mode, where each pick carries its own market-weighted multiplier. Six heavy favorites in Team Picks paid only ~5x (Week 10). Always use the multiplier the app shows (the user's report or screenshot); if unknown, say so and do not assume 22.22x.
@@ -131,7 +131,7 @@ Explosives & Big Plays: Explosive play rate (rushes 10+ yards, passes 20+ yards)
 PACE (required): Seconds per play, plays per game, and run/pass split. Highlight service academy option teams (~30+ sec/play) vs. hurry-up spread offenses (<20 sec/play).
 Turnovers & Luck: Turnover margin, fumble recovery luck, red-zone scoring % vs. TD conversion %, and 4th-down conversion rate (attempts/makes). Flag any team that lost by 10+ despite winning total yards/YPP due to >= 3 failed 4th-down attempts as a prime `REGRESSION UP` candidate for the following week, but only if EPA/play or post-game win expectancy (Deserved Win %) also favors that team (Section 13D). Yardage alone never earns the tag.
 Situational: Rest/travel (cross-country conference realignment travel, e.g. Big Ten/ACC coasts), bye weeks, weeknight short weeks (MACtion, Sun Belt Tuesday/Wednesday games), sandwich/lookahead spots.
-Pythagorean Expectation: $PF^{2.37} / (PF^{2.37} + PA^{2.37})$ vs. actual win %. If actual win % deviates by $\ge 0.18$, flag REGRESSION DOWN or REGRESSION UP.
+Pythagorean Expectation: $PF^{2.37} / (PF^{2.37} + PA^{2.37})$ vs. actual win %. If actual win % deviates by $\ge 0.18$, flag REGRESSION DOWN or REGRESSION UP. A Pythagorean flag by itself is **context, not a named reason** (Section 5): it cannot move a probability, lower a grade, or drop a leg unless the team's garbage-time-filtered EPA margin (CFBD) also says its record is ahead of (DOWN) or behind (UP) its play. Without that agreement, print the flag and lower data confidence one step only.
 
 ## 8. TRENDS AND SITUATIONAL FRAMEWORK
 - Evaluate multi-season, coach-specific, and conference splits. In CFB, coaching schemes matter more than multi-year team trends due to high player turnover.
@@ -162,6 +162,7 @@ For each leg provide:
 - WHAT KILLS THIS LEG: One definitive line (e.g., 4th-quarter backdoor cover by backup QB, 35-second service academy pace, wind gusts killing deep ball).
 - Data confidence: High / Medium / Low.
 - Keep, Replace, or Drop (provide up to 2 cross-game replacements for any Drop).
+- CONDITIONAL KEEP: a conditional Keep ("Keep only after X") must name its condition and the report that settles it. If X is not confirmed on an opened page before the ticket's lock, the leg is **Drop** for that ticket. Expected or likely is not confirmed.
 
 ## 10A. BRUTALITY FILTER
 Its sole purpose is to destroy the thesis for the pick before grading:
