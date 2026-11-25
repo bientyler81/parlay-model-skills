@@ -3,7 +3,7 @@ name: "nfl-parlay-model"
 description: "Use for any NFL betting work: grading PrizePicks parlay legs or tickets (power or flex), player props, spitballing games/lines, odds, injuries, weather, pace, team context, break-even math, Gemini comparisons, or updating the parlay board/ticket log."
 ---
 
-<!-- DRAFT v0.17 from the Week 11 review (Nov 24, 2026). Not the live method until the user adopts it. Changes vs v0.16: sections 11C, 14 and 3 (process and sources only). -->
+<!-- ADOPTED by the user Nov 24, 2026; live copy is 01_Master_Prompt/Master_Prompt_v0.17_SKILL.md. Draft from the Week 11 review. Changes vs v0.16: sections 11C, 14 and 3 (process and sources only). -->
 # NFL Parlay Evaluation Master Prompt — v0.17
 
 ## 0. ENFORCEMENT (read first, every time)

@@ -3,7 +3,7 @@ name: weekly-rundown
 description: Full game-by-game NFL rundown for the current (or a named) week, in bullet points, with every stat ranked and explained, plus charts (slate overview and one matchup/price chart per game). Use whenever the user asks for "this week's rundown", "give me the rundown", "rundown for week N", "run the rundown", "all the games this week with all the stats", or anything similar. Info only, no grades. Typed as /weekly-rundown (optionally with a week number).
 ---
 
-# Weekly rundown (method v0.16)
+# Weekly rundown (method v0.17)
 
 the user wants one command that produces the full Week-N rundown without having to spell it out. The model output is `04_Research/Week11/04_Full_Rundown_Nov21.md`: match its structure, depth and tone exactly. Every game gets tons of bullets, every number gets context (rank out of 32, league average, what it means), and nothing gets left out.
 
